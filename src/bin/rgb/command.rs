@@ -31,15 +31,17 @@ use bp::seals::txout::{CloseMethod, ExplicitSeal, TxPtr};
 use rgb::{Runtime, RuntimeError};
 use rgbstd::containers::{Bindle, Transfer, UniversalBindle};
 use rgbstd::contract::{ContractId, GenesisSeal, GraphSeal, StateType};
-use rgbstd::interface::{ContractBuilder, SchemaIfaces, TypedState};
+use rgbstd::interface::{ContractBuilder, SchemaIfaces, TypedState, rgb20};
 use rgbstd::persistence::{Inventory, Stash};
 use rgbstd::schema::SchemaId;
 use rgbstd::Txid;
+use rgbstd::stl::{DivisibleAssetSpec, Precision, RicardianContract, Timestamp};
 use rgbwallet::psbt::opret::OutputOpret;
 use rgbwallet::psbt::tapret::OutputTapret;
 use rgbwallet::{InventoryWallet, RgbInvoice, RgbTransport};
 use strict_types::encoding::{FieldName, Ident, TypeName};
 use strict_types::StrictVal;
+use rgb_schemata::{nia_rgb20, nia_schema};
 
 // TODO: For now, serde implementation doesn't work for consignments due to
 //       some of the keys which can't be serialized to strings. Once this fixed,
@@ -133,14 +135,8 @@ pub enum Command {
     /// Issues new contract.
     #[display("issue")]
     Issue {
-        /// Schema name to use for the contract.
-        schema: SchemaId, //String,
-
-        /// Interface name to use for the contract.
-        iface: String,
-
-        /// File containing contract genesis description in YAML format.
-        contract: PathBuf,
+        /// UTXO where to issue the asset
+        utxo: String,
     },
 
     /// Create new invoice.
@@ -384,132 +380,40 @@ impl Command {
                 }
             }
             Command::Issue {
-                schema,
-                iface: iface_name,
-                contract,
+                utxo,
             } => {
-                let SchemaIfaces {
-                    ref schema,
-                    ref iimpls,
-                } = runtime.schema(schema)?;
-                let iface_name = tn!(iface_name);
-                let iface = runtime.iface_by_name(&iface_name)?.clone();
-                let iface_id = iface.iface_id();
-                let iface_impl = iimpls.get(&iface_id).ok_or_else(|| {
-                    RuntimeError::Custom(format!(
-                        "no known interface implementation for {iface_name}"
-                    ))
-                })?;
-                let types = &schema.type_system;
-
-                let file = fs::File::open(contract)?;
-
-                let mut builder = ContractBuilder::with(iface, schema.clone(), iface_impl.clone())?
+                let mut builder = ContractBuilder::with(rgb20(), nia_schema(), nia_rgb20()).unwrap()
                     .set_chain(runtime.chain());
 
-                let code = serde_yaml::from_reader::<_, serde_yaml::Value>(file)?;
+                let spec = DivisibleAssetSpec::new("USDT", "USD Tether", Precision::Indivisible);
 
-                let code = code
-                    .as_mapping()
-                    .expect("invalid YAML root-level structure");
-                if let Some(globals) = code.get("globals") {
-                    for (name, val) in globals
-                        .as_mapping()
-                        .expect("invalid YAML: globals must be an mapping")
-                    {
-                        let name = name
-                            .as_str()
-                            .expect("invalid YAML: global name must be a string");
-                        let state_type = iface_impl
-                            .global_state
-                            .iter()
-                            .find(|info| info.name.as_str() == name)
-                            .expect("unknown type name")
-                            .id;
-                        let sem_id = schema
-                            .global_types
-                            .get(&state_type)
-                            .expect("invalid schema implementation")
-                            .sem_id;
-                        let val = StrictVal::from(val.clone());
-                        let typed_val = types
-                            .typify(val, sem_id)
-                            .expect("global type doesn't match type definition");
+                let terms = RicardianContract::default();
+                println!("TERMS: {terms:?}");
 
-                        let serialized = types
-                            .strict_serialize_type::<U16>(&typed_val)
-                            .expect("internal error");
-                        // Workaround for borrow checker:
-                        let field_name =
-                            FieldName::try_from(name.to_owned()).expect("invalid type name");
-                        builder = builder
-                            .add_global_state(field_name, serialized)
-                            .expect("invalid global state data");
-                    }
-                }
+                let created = Timestamp::default();
 
-                if let Some(assignments) = code.get("assignments") {
-                    for (name, val) in assignments
-                        .as_mapping()
-                        .expect("invalid YAML: assignments must be an mapping")
-                    {
-                        let name = name
-                            .as_str()
-                            .expect("invalid YAML: assignments name must be a string");
-                        let state_type = iface_impl
-                            .assignments
-                            .iter()
-                            .find(|info| info.name.as_str() == name)
-                            .expect("unknown type name")
-                            .id;
-                        let state_schema = schema
-                            .owned_types
-                            .get(&state_type)
-                            .expect("invalid schema implementation");
+                builder = builder
+                    .add_global_state("spec", spec)
+                    .expect("invalid spec")
+                    .add_global_state("terms", terms)
+                    .expect("invalid terms")
+                    .add_global_state("created", created)
+                    .expect("invalid created");
 
-                        let assign = val.as_mapping().expect("an assignment must be a mapping");
-                        let seal = assign
-                            .get("seal")
-                            .expect("assignment doesn't provide seal information")
-                            .as_str()
-                            .expect("seal must be a string");
-                        let seal =
-                            ExplicitSeal::<Txid>::from_str(seal).expect("invalid seal definition");
-                        let seal = GenesisSeal::from(seal);
-
-                        // Workaround for borrow checker:
-                        let field_name =
-                            FieldName::try_from(name.to_owned()).expect("invalid type name");
-                        match state_schema.state_type() {
-                            StateType::Void => todo!(),
-                            StateType::Fungible => {
-                                let amount = assign
-                                    .get("amount")
-                                    .expect("owned state must be a fungible amount")
-                                    .as_u64()
-                                    .expect("fungible state must be an integer");
-                                builder = builder
-                                    .add_fungible_state(field_name, seal, amount)
-                                    .expect("invalid global state data");
-                            }
-                            StateType::Structured => todo!(),
-                            StateType::Attachment => todo!(),
-                        }
-                    }
-                }
+                let seal =
+                    ExplicitSeal::<Txid>::from_str(&format!("opret1st:{utxo}")).unwrap();
+                let seal = GenesisSeal::from(seal);
+                builder = builder
+                    .add_fungible_state("assetOwner", seal, 2000)
+                    .expect("invalid global state data");
 
                 let contract = builder.issue_contract().expect("failure issuing contract");
-                let id = contract.contract_id();
                 let validated_contract = contract
                     .validate(runtime.resolver())
                     .map_err(|_| RuntimeError::IncompleteContract)?;
                 runtime
                     .import_contract(validated_contract)
                     .expect("failure importing issued contract");
-                eprintln!(
-                    "A new contract {id} is issued and added to the stash.\nUse `export` command \
-                     to export the contract."
-                );
             }
             Command::Invoice {
                 contract_id,

@@ -22,6 +22,7 @@ dependencies = [
  "half",
  "paste",
  "ripemd",
+ "serde",
  "sha2",
  "strict_encoding",
  "strict_types",
@@ -989,6 +990,7 @@ dependencies = [
  "env_logger",
  "log",
  "rgb-persist-fs",
+ "rgb-schemata",
  "rgb-std",
  "rgb-wallet",
  "serde",
@@ -1011,6 +1013,7 @@ dependencies = [
  "getrandom",
  "mime",
  "secp256k1-zkp",
+ "serde",
  "single_use_seals",
  "strict_encoding",
  "strict_types",
@@ -1024,6 +1027,22 @@ dependencies = [
  "amplify",
  "rgb-std",
  "strict_encoding",
+]
+
+[[package]]
+name = "rgb-schemata"
+version = "0.10.0-beta.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a037845df55943beda071e771a10fe737439fe4e4d3a5d00ffee23bb782c0d8c"
+dependencies = [
+ "aluvm",
+ "amplify",
+ "bp-core",
+ "rgb-std",
+ "serde",
+ "serde_json",
+ "strict_encoding",
+ "strict_types",
 ]
 
 [[package]]
@@ -1162,6 +1181,7 @@ dependencies = [
  "rand",
  "secp256k1",
  "secp256k1-zkp-sys",
+ "serde",
 ]
 
 [[package]]

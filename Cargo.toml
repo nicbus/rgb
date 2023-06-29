@@ -75,5 +75,5 @@ features = [ "all" ]
 
 [patch.crates-io]
 rgb-core = { git = "https://github.com/RGB-WG/rgb-core" }
-rgb-std = { git = "https://github.com/RGB-WG/rgb-wallet", branch = "fix/71" }
-rgb-wallet = { git = "https://github.com/RGB-WG/rgb-wallet", branch = "fix/71" }
+rgb-std = { git = "https://github.com/nicbus/rgb-wallet", branch = "rgb-sandbox" }
+rgb-wallet = { git = "https://github.com/nicbus/rgb-wallet", branch = "rgb-sandbox" }

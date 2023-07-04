@@ -26,6 +26,7 @@ use std::str::FromStr;
 use amplify::confinement::U16;
 use bitcoin::bip32::ExtendedPubKey;
 use bitcoin::psbt::Psbt;
+use bp::Outpoint;
 use bp::seals::txout::{CloseMethod, ExplicitSeal, TxPtr};
 use rgb::{Runtime, RuntimeError};
 use rgbstd::containers::{Bindle, Transfer, UniversalBindle};
@@ -358,7 +359,8 @@ impl Command {
                 println!("\nOwned:");
                 for owned in &contract.iface.assignments {
                     println!("  {}:", owned.name);
-                    if let Ok(allocations) = contract.fungible(owned.name.clone(), &None) {
+                    let none: Option<&Vec<Outpoint>> = None;
+                    if let Ok(allocations) = contract.fungible(owned.name.clone(), none) {
                         for allocation in allocations {
                             if let Some(utxo) =
                                 wallet.as_ref().and_then(|w| w.utxo(allocation.owner))

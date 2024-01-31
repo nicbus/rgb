@@ -454,8 +454,6 @@ dependencies = [
 [[package]]
 name = "bp-util"
 version = "0.11.0-beta.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b32a1745e168059aee08e54417a89d8430de5470a492b226fbe19eb7a3b4a2ee"
 dependencies = [
  "amplify",
  "base64",
@@ -477,7 +475,6 @@ dependencies = [
 [[package]]
 name = "bp-wallet"
 version = "0.11.0-beta.4"
-source = "git+https://github.com/BP-WG/bp-wallet?branch=v0.11#e8aa19d8475b14392ae7f1d9dfad1f41e0690056"
 dependencies = [
  "amplify",
  "bp-esplora",
@@ -1589,7 +1586,6 @@ dependencies = [
 [[package]]
 name = "rgb-invoice"
 version = "0.11.0-beta.4"
-source = "git+https://github.com/RGB-WG/rgb-std?branch=v0.11#9933cb200fa91a5464ee0e991f4d493e8d8625ef"
 dependencies = [
  "amplify",
  "baid58",
@@ -1660,7 +1656,6 @@ dependencies = [
 [[package]]
 name = "rgb-std"
 version = "0.11.0-beta.4"
-source = "git+https://github.com/RGB-WG/rgb-std?branch=v0.11#9933cb200fa91a5464ee0e991f4d493e8d8625ef"
 dependencies = [
  "amplify",
  "baid58",

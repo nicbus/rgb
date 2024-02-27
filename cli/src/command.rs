@@ -528,7 +528,7 @@ impl Exec for RgbArgs {
                     schema.clone(),
                     iface_impl.clone(),
                     self.general.network.is_testnet(),
-                )?;
+                ).expect("should not fail during rgb-sandbox test");
 
                 if let Some(globals) = code.get("globals") {
                     for (name, val) in globals

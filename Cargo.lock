@@ -336,7 +336,7 @@ dependencies = [
 [[package]]
 name = "bp-consensus"
 version = "0.11.0-beta.3"
-source = "git+https://github.com/BP-WG/bp-core?branch=v0.11#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
+source = "git+https://github.com/BP-WG/bp-core?rev=d90f5774e3b8d41cb97bb2f1113d8c00351d2291#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
 dependencies = [
  "amplify",
  "chrono",
@@ -350,7 +350,7 @@ dependencies = [
 [[package]]
 name = "bp-core"
 version = "0.11.0-beta.3"
-source = "git+https://github.com/BP-WG/bp-core?branch=v0.11#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
+source = "git+https://github.com/BP-WG/bp-core?rev=d90f5774e3b8d41cb97bb2f1113d8c00351d2291#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
 dependencies = [
  "amplify",
  "bp-consensus",
@@ -368,7 +368,7 @@ dependencies = [
 [[package]]
 name = "bp-dbc"
 version = "0.11.0-beta.3"
-source = "git+https://github.com/BP-WG/bp-core?branch=v0.11#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
+source = "git+https://github.com/BP-WG/bp-core?rev=d90f5774e3b8d41cb97bb2f1113d8c00351d2291#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
 dependencies = [
  "amplify",
  "base85",
@@ -382,7 +382,7 @@ dependencies = [
 [[package]]
 name = "bp-derive"
 version = "0.11.0-beta.3.1"
-source = "git+https://github.com/BP-WG/bp-std?branch=v0.11#b37cdba13786091e6e153add0c2beda9c6650ea1"
+source = "git+https://github.com/BP-WG/bp-std?rev=d2b7ded652bc51e5701b7a1a737fc046aa0583df#d2b7ded652bc51e5701b7a1a737fc046aa0583df"
 dependencies = [
  "amplify",
  "bitcoin_hashes",
@@ -412,7 +412,7 @@ dependencies = [
 [[package]]
 name = "bp-invoice"
 version = "0.11.0-beta.3.1"
-source = "git+https://github.com/BP-WG/bp-std?branch=v0.11#b37cdba13786091e6e153add0c2beda9c6650ea1"
+source = "git+https://github.com/BP-WG/bp-std?rev=d2b7ded652bc51e5701b7a1a737fc046aa0583df#d2b7ded652bc51e5701b7a1a737fc046aa0583df"
 dependencies = [
  "amplify",
  "bech32 0.9.1",
@@ -424,7 +424,7 @@ dependencies = [
 [[package]]
 name = "bp-seals"
 version = "0.11.0-beta.3"
-source = "git+https://github.com/BP-WG/bp-core?branch=v0.11#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
+source = "git+https://github.com/BP-WG/bp-core?rev=d90f5774e3b8d41cb97bb2f1113d8c00351d2291#d90f5774e3b8d41cb97bb2f1113d8c00351d2291"
 dependencies = [
  "amplify",
  "baid58",
@@ -440,7 +440,7 @@ dependencies = [
 [[package]]
 name = "bp-std"
 version = "0.11.0-beta.3.1"
-source = "git+https://github.com/BP-WG/bp-std?branch=v0.11#b37cdba13786091e6e153add0c2beda9c6650ea1"
+source = "git+https://github.com/BP-WG/bp-std?rev=d2b7ded652bc51e5701b7a1a737fc046aa0583df#d2b7ded652bc51e5701b7a1a737fc046aa0583df"
 dependencies = [
  "amplify",
  "bp-consensus",
@@ -454,6 +454,7 @@ dependencies = [
 [[package]]
 name = "bp-util"
 version = "0.11.0-beta.4"
+source = "git+https://github.com/BP-WG/bp-wallet?rev=32a3fd066689e28adaa26cb07afdc28dead518d5#32a3fd066689e28adaa26cb07afdc28dead518d5"
 dependencies = [
  "amplify",
  "base64",
@@ -475,6 +476,7 @@ dependencies = [
 [[package]]
 name = "bp-wallet"
 version = "0.11.0-beta.4"
+source = "git+https://github.com/BP-WG/bp-wallet?rev=32a3fd066689e28adaa26cb07afdc28dead518d5#32a3fd066689e28adaa26cb07afdc28dead518d5"
 dependencies = [
  "amplify",
  "bp-esplora",
@@ -736,7 +738,7 @@ dependencies = [
 [[package]]
 name = "descriptors"
 version = "0.11.0-beta.3.1"
-source = "git+https://github.com/BP-WG/bp-std?branch=v0.11#b37cdba13786091e6e153add0c2beda9c6650ea1"
+source = "git+https://github.com/BP-WG/bp-std?rev=d2b7ded652bc51e5701b7a1a737fc046aa0583df#d2b7ded652bc51e5701b7a1a737fc046aa0583df"
 dependencies = [
  "amplify",
  "bp-derive",
@@ -1422,7 +1424,7 @@ dependencies = [
 [[package]]
 name = "psbt"
 version = "0.11.0-beta.3.1"
-source = "git+https://github.com/BP-WG/bp-std?branch=v0.11#b37cdba13786091e6e153add0c2beda9c6650ea1"
+source = "git+https://github.com/BP-WG/bp-std?rev=d2b7ded652bc51e5701b7a1a737fc046aa0583df#d2b7ded652bc51e5701b7a1a737fc046aa0583df"
 dependencies = [
  "amplify",
  "base64",
@@ -1566,12 +1568,13 @@ dependencies = [
 [[package]]
 name = "rgb-core"
 version = "0.11.0-beta.4"
-source = "git+https://github.com/RGB-WG/rgb-core?branch=v0.11#6e0cc2d73fa2527a9f31d4f498973d09400b959e"
+source = "git+https://github.com/RGB-WG/rgb-core?rev=3d88aa308674cf464e879a6439fe4f8382596845#3d88aa308674cf464e879a6439fe4f8382596845"
 dependencies = [
  "aluvm",
  "amplify",
  "baid58",
  "bp-core",
+ "chrono",
  "commit_verify",
  "getrandom",
  "mime",
@@ -1586,6 +1589,7 @@ dependencies = [
 [[package]]
 name = "rgb-invoice"
 version = "0.11.0-beta.4"
+source = "git+https://github.com/RGB-WG/rgb-std?branch=det#379c4ee27ea9b1ee66b25a1d523b0fcba4deaabb"
 dependencies = [
  "amplify",
  "baid58",
@@ -1656,6 +1660,7 @@ dependencies = [
 [[package]]
 name = "rgb-std"
 version = "0.11.0-beta.4"
+source = "git+https://github.com/RGB-WG/rgb-std?branch=det#379c4ee27ea9b1ee66b25a1d523b0fcba4deaabb"
 dependencies = [
  "amplify",
  "baid58",

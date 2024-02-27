@@ -19,6 +19,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use std::collections::BTreeSet;
 use std::convert::Infallible;
 
 use amplify::confinement::Confined;
@@ -223,7 +224,7 @@ impl Runtime {
                         }
                     })
                     .map(|a| a.seal)
-                    .collect::<Vec<_>>()
+                    .collect::<BTreeSet<_>>()
             }
             _ => return Err(CompositionError::Unsupported),
         };
@@ -238,6 +239,7 @@ impl Runtime {
         };
         let outpoints = outputs
             .iter()
+            // TODO: Support liquid
             .map(|o| o.as_reduced_unsafe())
             .map(|o| Outpoint::new(o.txid, o.vout));
         params.tx.change_keychain = RgbKeychain::for_method(method).into();

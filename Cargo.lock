@@ -397,9 +397,9 @@ dependencies = [
 
 [[package]]
 name = "bp-esplora"
-version = "0.11.0-beta.2"
+version = "0.11.0-beta.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d642e2e6d699edd884e0359668750df1590d209f2ff956d3c5fbf58b5eba730"
+checksum = "c918bed49faf5d1e1867f0837de676d7172cb37b7fcebe5b6eb768ee7b98e30c"
 dependencies = [
  "amplify",
  "bp-std",
@@ -459,7 +459,7 @@ dependencies = [
 [[package]]
 name = "bp-util"
 version = "0.11.0-beta.4"
-source = "git+https://github.com/BP-WG/bp-wallet?branch=v0.11#fabaa6c04c8055490fc4af921012d8d09998f3bf"
+source = "git+https://github.com/BP-WG/bp-wallet?branch=fee#b39723f755e50bc635a920a6ff1c9ebfb355ac0e"
 dependencies = [
  "amplify",
  "base64",
@@ -481,7 +481,7 @@ dependencies = [
 [[package]]
 name = "bp-wallet"
 version = "0.11.0-beta.4"
-source = "git+https://github.com/BP-WG/bp-wallet?branch=v0.11#fabaa6c04c8055490fc4af921012d8d09998f3bf"
+source = "git+https://github.com/BP-WG/bp-wallet?branch=fee#b39723f755e50bc635a920a6ff1c9ebfb355ac0e"
 dependencies = [
  "amplify",
  "bp-esplora",
